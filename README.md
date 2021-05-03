@@ -1,18 +1,22 @@
 # SummerJob
 
-# JavaScript Promises</h1>
+# JavaScript Promises
 
 
 ## O que vamos aprender?
-  Você aprenderá a utilizar promises para fazer chamadas assíncronas a API de terceiros, iremos utilizar o fetch().
+  Você aprenderá a utilizar promises para fazer chamadas assíncronas em API's de terceiros, utilizando o fetch().
+  
   Irá aprender quais são os estágios de uma promise e como retornar um resultado ou um erro.
+  
   Entenderá o .then() e como encadeá-los, .catch() e .finally().
 
 
 
 ## Você será capaz de:
  Fazer chamadas assíncronas em API's de terceiros com fetch().
+ 
  Encadear vários .then() e entendê-los.
+ 
  Tratar erros caso aconteça.
 
 
@@ -21,16 +25,16 @@
   As promises vieram para resolver problemas das callbacks, promises podem ser usadas para fazer requisições assíncronas a uma URL (endereço de um site) sem travar o seu código, imagine que você tivesse que esperar seu código ir até algum site, esperar ele responder com algum dado e só depois continuasse a ler seu código javascript, lembrando que algumas requisições podem demorar alguns segundos ou mais, sua página seria realmente lenta.
   Outro cenário seria o acesso de alguma informação em um banco de dados, você não pode travar sua aplicação enquanto busca informações em seu banco de dados, para isso você usará uma função assíncrona.
   Na sua carreira como dev, você precisará acessar API's de terceiros e banco de dados muitas vezes, o que torna a compreensão de códigos assíncronos uma necessidade.
-      </section>
+
 
 # Conteúdos
 
 ## Promises
- Fazendo uma abstração de uma Promise, ela é como um acordo que você faz com você.
+ Fazendo uma abstração de uma Promise, ela é como um acordo que você faz contigo.
  Ex: Quando você promete que vai começar a fazer exercícios físicos diaramente, a cada dia que você fizer você terá um return ('Fiz os exercícios diários') e o dia que você não fizer você terá um return ('Não fiz os exercícios diários'), sendo assim, quando você faz a promessa no começo do dia, nunca sabe se vai dar certo ou errado, pode surgir imprevistos e você não ter tempo para fazer seus exercícios diário.
 
  Em promises temos um método próprio para quando algo der certo ou quando der errado, resolve() e reject(), pense neles como os return citados acima.
-```javacript
+```javascript
  const minhaPromessa = Promise.resolve('Minha promessa');
  ```
         
@@ -39,7 +43,9 @@
 ### Uma Promise tem 3 estados:
 
  pending (pendente): Estado inicial, que ainda não foi resolvida e nem rejeitada.
+ 
  fulfilled (resolvida): Quando ocorreu tudo bem e foi resolvida ( resolve(valor) )
+ 
  rejected (rejeitada):  Quando houve um erro e foi rejeitada ( reject(valor) )
 ```javascript
  const novaPromessa = new Promise((resolve, reject) => { /* ...buscar dados em uma API */ });
@@ -58,17 +64,17 @@
 
  `.then(funcaoDeCallback)` = Quando você tem uma promise resolvida e quer fazer algo com ela, modificar os dados, colocar na sua tela, etc.
  
- *Obs*: A função de callback de .then() tem que receber 1 parâmetro, sendo ele o retorno da última promise resolvida.
+ **Obs**: A função de callback de .then() tem que receber 1 parâmetro, sendo ele o retorno da última promise resolvida.
 
  `.catch(funcaoDeCallback)` = Quando ocorre algum erro em qualquer promise acima deste catch(Lembrando que resolve, reject e then retornam promises), o código irá para o .catch, é usado para tratar erros.
  
- *Obs*: A função de callback de .catch() tem que receber 1 parâmetro, sendo ele o erro que aconteceu no seu reject do new Promise ou caso aconteça algum erro nos .then acima dele.
+ **Obs**: A função de callback de .catch() tem que receber 1 parâmetro, sendo ele o erro que aconteceu no seu reject do new Promise ou caso aconteça algum erro nos .then acima dele.
  
  `.finally(funcaoDeCallback)` = Quando você precisa fazer algo independente se a promise for resolvida ou rejeitada. Ex: Fechar a conexão com um banco de dados.
 
  `new Promise(funcaoDeCallback)` = Quando você quer criar uma promise que ainda não foi resolvida nem rejeitada.
  
- *Obs*: A função de callback de new Promise(), tem que receber 2 parâmetros, sendo o primeiro para quando ela for resolvida(Tudo ocorreu bem) e o segundo para quando for rejeitada(Algo deu errado).
+ **Obs**: A função de callback de new Promise(), tem que receber 2 parâmetros, sendo o primeiro para quando ela for resolvida(Tudo ocorreu bem) e o segundo para quando for rejeitada(Algo deu errado).
 
 
 ###### Vamos a outro exemplo usando abstração da vida real:
@@ -145,8 +151,8 @@ const minhaMaeContinuouFazendoOAlmocoETerminou = () => {
 ```
  O `.then((dados) => {...})` recebe uma função de callback, tenha em mente que o parâmetro(dados) passado para essa callback vem do retorno de `resolve('Promessa resolvida')`
         
- Caso você tente encadear outro .then você não terá o `dados`(valor), mas por que? Porquê no .then do exemplo acima você não retorna nada, apenas faz uma ação (console.log).
- Se você quer encadear outro `.then()` neste, você precisa retornar o `dados`(valor), podendo modificá-lo ou não antes de retorná-lo.
+ Caso você tente encadear outro .then você não terá o `dados`, mas por que? Porquê no .then do exemplo acima você não retorna nada, apenas faz uma ação (console.log).
+ Se você quer encadear outro `.then()` neste, você precisa retornar o `dados`, podendo modificá-lo ou não antes de retorná-lo.
 ```javascript
         Promise.resolve('Promessa resolvida')
           .then((dados) => {
