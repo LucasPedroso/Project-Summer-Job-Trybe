@@ -57,12 +57,17 @@
  `Promise.reject(valor)` = Quando você quer transformar um valor qualquer em uma promise que foi rejeitada por algum motivo.
 
  `.then(funcaoDeCallback)` = Quando você tem uma promise resolvida e quer fazer algo com ela, modificar os dados, colocar na sua tela, etc.
+ 
  *Obs*: A função de callback de .then() tem que receber 1 parâmetro, sendo ele o retorno da última promise resolvida.
 
  `.catch(funcaoDeCallback)` = Quando ocorre algum erro em qualquer promise acima deste catch(Lembrando que resolve, reject e then retornam promises), o código irá para o .catch, é usado para tratar erros.
+ 
  *Obs*: A função de callback de .catch() tem que receber 1 parâmetro, sendo ele o erro que aconteceu no seu reject do new Promise ou caso aconteça algum erro nos .then acima dele.
+ 
+ `.finally(funcaoDeCallback)` = Quando você precisa fazer algo independente se a promise for resolvida ou rejeitada. Ex: Fechar a conexão com um banco de dados.
 
  `new Promise(funcaoDeCallback)` = Quando você quer criar uma promise que ainda não foi resolvida nem rejeitada.
+ 
  *Obs*: A função de callback de new Promise(), tem que receber 2 parâmetros, sendo o primeiro para quando ela for resolvida(Tudo ocorreu bem) e o segundo para quando for rejeitada(Algo deu errado).
 
 
