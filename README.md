@@ -42,102 +42,106 @@
  fulfilled (resolvida): Quando ocorreu tudo bem e foi resolvida ( resolve(valor) )
  rejected (rejeitada):  Quando houve um erro e foi rejeitada ( reject(valor) )
 ```javascript
- const novaPromessa = new Promise((resolve, reject) => { /* ...buscar dados em uma API */ }) // retorna uma promise, no estado pendente, até que seja resolvida ou rejeitada.
- const promessaResolvida = Promise.resolve('Resolvida') // retorna uma promise resolvida, no estado fulfilled.
- const promessaRejeitada = Promise.reject('Rejeitada') // retorna uma promise rejeitada, no estado reject.
+ const novaPromessa = new Promise((resolve, reject) => { /* ...buscar dados em uma API */ });
+ // retorna uma promise, no estado pendente, até que seja resolvida ou rejeitada.
+ 
+ const promessaResolvida = Promise.resolve('Resolvida');
+ // retorna uma promise resolvida, no estado fulfilled.
+ 
+ const promessaRejeitada = Promise.reject('Rejeitada');
+ // retorna uma promise rejeitada, no estado reject.
 ```
 ## Uma breve introdução ao mundo de Promises:
- Promise.resolve(valor) = Quando você quer transformar um valor qualquer em uma promise já resolvida.
+ `Promise.resolve(valor)` = Quando você quer transformar um valor qualquer em uma promise já resolvida.
 
- Promise.reject(valor) = Quando você quer transformar um valor qualquer em uma promise que foi rejeitada por algum motivo.
+ `Promise.reject(valor)` = Quando você quer transformar um valor qualquer em uma promise que foi rejeitada por algum motivo.
 
- .then(funcaoDeCallback) = Quando você tem uma promise resolvida e quer fazer algo com ela, modificar os dados, colocar na sua tela, etc.
- Obs: A função de callback de .then() tem que receber 1 parâmetro, sendo ele o retorno da última promise resolvida.
+ `.then(funcaoDeCallback)` = Quando você tem uma promise resolvida e quer fazer algo com ela, modificar os dados, colocar na sua tela, etc.
+ *Obs*: A função de callback de .then() tem que receber 1 parâmetro, sendo ele o retorno da última promise resolvida.
 
- .catch(funcaoDeCallback) = Quando ocorre algum erro em qualquer promise acima deste catch(Lembrando que resolve, reject e then retornam promises), o código irá para o .catch, é usado para tratar erros.
- Obs: A função de callback de .catch() tem que receber 1 parâmetro, sendo ele o erro que aconteceu no seu reject do new Promise ou caso aconteça algum erro nos .then acima dele.
+ `.catch(funcaoDeCallback)` = Quando ocorre algum erro em qualquer promise acima deste catch(Lembrando que resolve, reject e then retornam promises), o código irá para o .catch, é usado para tratar erros.
+ *Obs*: A função de callback de .catch() tem que receber 1 parâmetro, sendo ele o erro que aconteceu no seu reject do new Promise ou caso aconteça algum erro nos .then acima dele.
 
- new Promise(funcaoDeCallback) = Quando você quer criar uma promise que ainda não foi resolvida nem rejeitada.
- Obs: A função de callback de new Promise(), tem que receber 2 parâmetros, sendo o primeiro para quando ela for resolvida(Tudo ocorreu bem) e o segundo para quando for rejeitada(Algo deu errado).
+ `new Promise(funcaoDeCallback)` = Quando você quer criar uma promise que ainda não foi resolvida nem rejeitada.
+ *Obs*: A função de callback de new Promise(), tem que receber 2 parâmetros, sendo o primeiro para quando ela for resolvida(Tudo ocorreu bem) e o segundo para quando for rejeitada(Algo deu errado).
 
 
 ###### Vamos a outro exemplo usando abstração da vida real:
  Sua mãe te pede para ir ao banco para ela para pagar uma conta, mas isso precisa ser feito em 50 minutos, você terá que chamar o Uber e ir ao banco no tempo pedido, mas o que pode dar de errado né? Humm, por acaso tem um engarrafamento, um pneu fura, etc. Você só sabe que irá, mas não sabe se vai conseguir realizar ou não, é aí que entra as Promises e seus callbacks deuCerto, deuErrado.
  O detalhe é que você começou a fazer o almoço e colocou o feijão e o arroz no fogo, e isso não pode parar enquanto você vai ao banco para sua mãe, você pede a ela que ela cuide das panelas enquanto tentará ir ao banco no tempo pedido.
 ```javascript
-        let almoco = {
-          feijao: '',
-          arroz: '',
-          almocoPronto: false,
-        }
-        const comeceiAFazerAlmoco = () => {
-          almoco =  {
-            feijao: 'cozinhando',
-            arroz: 'cozinhando',
-            almocoPronto: false,
-          }
-        }
+let almoco = {
+  feijao: '',
+  arroz: '',
+  almocoPronto: false,
+}
+const comeceiAFazerAlmoco = () => {
+  almoco =  {
+    feijao: 'cozinhando',
+    arroz: 'cozinhando',
+    almocoPronto: false,
+  }
+}
+
+const uberChegouEMeLevouAoBancoEm50Minutos = (bool) => {
+  return bool;
+}
+```
         
-        const uberChegouEMeLevouAoBancoEm50Minutos = (bool) => {
-          return bool;
-        }
-        </pre>
         
-        
-        <pre>
-        const favorParaMae = new Promise((deuCerto, deuErrado) => {  // por convenção usa-se o nome resolve e reject nos parâmetros.
-        
-          if (uberChegouEMeLevouAoBancoEm50Minutos(true)){ // Troque o true para false para simular um erro e observe o resultado.
-        
-            setTimeout(() => { // Utilizaremos o setTimeout para simular alguma requisição demorada, neste caso serão 5 segundos.
-              comeceiAFazerAlmoco()
-              deuCerto('Deu certo mãe');
-              minhaMaeContinuouFazendoOAlmocoETerminou();
-            }, 5000);
-        
-          } else {
-            
-            setTimeout(() => {
-              comeceiAFazerAlmoco();
-              deuErrado('Deu Errado mãe, ocorreu um imprevisto e não vou chegar a tempo');
-              minhaMaeContinuouFazendoOAlmocoETerminou();
-            }, 5000);
-        
-          }
-        
-        }).then((missaoDadaMissaoCumprida) => { // Esse .then só será executado caso "deuCerto" aconteceu.
-        
-          return `${missaoDadaMissaoCumprida}, agora a senhora pode ficar tranquila que não pagará juros.`
-        
-        }).catch((aconteceuUmImprevisto) => {  // Esse catch só será executado caso "deuErrado" aconteceu, ou se no .then() acima ocorrer algum erro.
-        
-          console.error(aconteceuUmImprevisto, ', sinto muito mãe, havia um engarrafamento e não pude chegar a tempo no banco, haverá um juros na conta.');
-        
-        }).finally(() => {
-          console.table(almoco)
-        })
-        
-        const minhaMaeContinuouFazendoOAlmocoETerminou = () => {
-          almoco =  {
-            feijao: 'Pronto',
-            arroz: 'Pronto',
-            almocoPronto: true,
-          }
-        }
+```javascript
+const favorParaMae = new Promise((deuCerto, deuErrado) => {  // por convenção usa-se o nome resolve e reject nos parâmetros.
+
+  if (uberChegouEMeLevouAoBancoEm50Minutos(true)){ // Troque o true para false para simular um erro e observe o resultado.
+
+    setTimeout(() => { // Utilizaremos o setTimeout para simular alguma requisição demorada, neste caso serão 5 segundos.
+      comeceiAFazerAlmoco()
+      deuCerto('Deu certo mãe');
+      minhaMaeContinuouFazendoOAlmocoETerminou();
+    }, 5000);
+
+  } else {
+
+    setTimeout(() => {
+      comeceiAFazerAlmoco();
+      deuErrado('Deu Errado mãe, ocorreu um imprevisto e não vou chegar a tempo');
+      minhaMaeContinuouFazendoOAlmocoETerminou();
+    }, 5000);
+
+  }
+
+}).then((missaoDadaMissaoCumprida) => { // Esse .then só será executado caso "deuCerto" aconteceu.
+
+  return `${missaoDadaMissaoCumprida}, agora a senhora pode ficar tranquila que não pagará juros.`
+
+}).catch((aconteceuUmImprevisto) => {  // Esse catch só será executado caso "deuErrado" aconteceu, ou se no .then() acima ocorrer algum erro.
+
+  console.error(aconteceuUmImprevisto, ', sinto muito mãe, havia um engarrafamento e não pude chegar a tempo no banco, haverá um juros na conta.');
+
+}).finally(() => {
+  console.table(almoco)
+})
+
+const minhaMaeContinuouFazendoOAlmocoETerminou = () => {
+  almoco =  {
+    feijao: 'Pronto',
+    arroz: 'Pronto',
+    almocoPronto: true,
+  }
+}
 ```
 
-# Entenda como usar o .then() um abaixo do outro.<
- Vamos ao exemplo de uma Promise resolvida com um .then()
-      
+# Entenda como usar o .then() um abaixo do outro.
+### Vamos ao exemplo de uma Promise resolvida com um .then().
 
 ```javascript
         Promise.resolve('Promessa resolvida')
           .then((dados) => console.log(dados))  // Irá imprimir 'Promessa resolvida' no console do navegador.
 ```
- O .then((dados) => {...}) recebe uma função de callback, tenha em mente que o parâmetro(dados) passado para essa callback vem do retorno de resolve('Promessa resolvida')
+ O `.then((dados) => {...})` recebe uma função de callback, tenha em mente que o parâmetro(dados) passado para essa callback vem do retorno de `resolve('Promessa resolvida')`
         
- Caso você tente encadear outro .then você não terá o dados(valor), mas por que? Porquê no .then do exemplo acima você não retorna nada, apenas faz uma ação (console.log).
- Se você quer encadear outro .then() neste, você precisa retornar o dados(valor), podendo modificá-lo ou não antes de retorná-lo.
+ Caso você tente encadear outro .then você não terá o `dados`(valor), mas por que? Porquê no .then do exemplo acima você não retorna nada, apenas faz uma ação (console.log).
+ Se você quer encadear outro `.then()` neste, você precisa retornar o `dados`(valor), podendo modificá-lo ou não antes de retorná-lo.
 ```javascript
         Promise.resolve('Promessa resolvida')
           .then((dados) => {
@@ -145,7 +149,7 @@
             return `${dados}, e modificada dentro do then`;
           }).then((dados) => console.log(dados))
 ```
- Sempre que você quiser usar outro .then, o anterior precisa retornar algo.
+ Sempre que você quiser usar outro .then(), o anterior precisa retornar algo.
 
 
  Observe o exemplo, será explicado abaixo com detalhes. Não se preocupe com o catch e finally por enquanto.
