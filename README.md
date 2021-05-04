@@ -58,13 +58,14 @@
  // retorna uma promise rejeitada, no estado reject.
 ```
 ## Uma breve introdução ao mundo de Promises:
+
  `Promise.resolve(valor)` = Quando você quer transformar um valor qualquer em uma promise já resolvida.
 
  `Promise.reject(valor)` = Quando você quer transformar um valor qualquer em uma promise que foi rejeitada por algum motivo.
 
- `.then(funcaoDeCallback)` = Quando você tem uma promise resolvida e quer fazer algo com ela, modificar os dados, colocar na sua tela, etc.
+ `.then(funcaoDeCallback`[^1]`)` = Quando você tem uma promise resolvida e quer fazer algo com ela, modificar os dados, colocar na sua tela, etc.
  
- **Obs**: A função de callback de .then() tem que receber 1 parâmetro, sendo ele o retorno da última promise resolvida.
+ [^1]: **Obs**: A função de callback de .then() tem que receber 1 parâmetro, sendo ele o retorno da última promise resolvida.
 
  `.catch(funcaoDeCallback)` = Quando ocorre algum erro em qualquer promise acima deste catch(Lembrando que resolve, reject e then retornam promises), o código irá para o .catch, é usado para tratar erros.
  
