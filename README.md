@@ -98,8 +98,9 @@ const favorParaMae = new Promise((deuCerto, deuErrado) => {  // por convenção 
   if (uberChegouEMeLevouAoBancoEm50Minutos(true)){ // Troque o true para false para simular um erro e observe o resultado.
 
     setTimeout(() => { // Utilizaremos o setTimeout para simular alguma requisição demorada, neste caso serão 5 segundos.
-      deuCerto('Deu certo mãe');
-      minhaMaeContinuouFazendoOAlmocoETerminou();
+      /* return */ deuCerto('Deu certo mãe'); // Note que você "retornou que deu certo", mas isso não interrompe o fluxo do código.
+      minhaMaeContinuouFazendoOAlmocoETerminou(); // Essa linha e qualquer outra abaixo seria lida.
+      // Para interromper o fluxo do código no momento que deu certo, descomente o return dele, isso se chama early-return.
     }, 5000);
 
   } else {
@@ -175,10 +176,10 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
             return dadosModificados2;
           })
           .catch((erro) => {
-            // Aqui seria o código para tratamento de algum erro que aconteça nos 2 then() anteriores.
+            // Aqui seria o código para tratamento de algum erro que aconteça nos dois then() anteriores.
             console.error(erro, 'e estou me sentido sem disposição. Algo deu errado.');
           })
-          .then((dados) => { // O dados agora tem o valor retornado do then acima, dadosModificado2
+          .then((dados) => { // O dados agora tem o valor retornado do then acima, dadosModificado2. Caso aconteça algum erro no dois then acima, dados terá o valor retornado pelo catch, neste caso é undefined, por quê não retornamos nada.
             const dadosModificados3 = `${dados} Depois do catch() posso continuar usando o then().`;
             console.log(dadosModificados3);
             return dadosModificados3;
