@@ -81,8 +81,10 @@
 
 
 #### Vamos a outro exemplo usando uma abstração da vida real:
+
  Sua mãe te pede para ir ao banco para ela para pagar uma conta, mas isso precisa ser feito em 50 minutos, o banco está para fechar e caso não consiga chegar a tempo ela pagará juros. Você terá que chamar o Uber e ir ao banco no tempo pedido, mas o que pode dar de errado né? Humm, por acaso tem um engarrafamento, um pneu fura, etc. Você só sabe que irá, mas não sabe se vai conseguir chegar a tempo ou não, é aí que entra as Promises e seus callbacks "deuCerto, deuErrado".
  O detalhe é que você começou a fazer o almoço e colocou o feijão e o arroz no fogo, e isso não pode parar enquanto você vai ao banco para sua mãe, você pede a ela que ela cuide das panelas enquanto tentará ir ao banco antes que feche.
+ 
 ```javascript
 let almoco = { // O objeto almoco será modificado no decorrer da promise.
   feijao: 'Cozinhando',
@@ -90,17 +92,20 @@ let almoco = { // O objeto almoco será modificado no decorrer da promise.
   almocoPronto: false,
 };
 
-const uberChegouEMeLevouAoBancoEm50Minutos = (bool) => { // Função para simular se houve ou não imprevisto.
-  return bool;
+const chegueiAntesDeFechar = (consegui) => { // Função para simular se houve ou não imprevisto.
+  return consegui;
 };
 
 const favorParaMae = new Promise((deuCerto, deuErrado) => {  // por convenção usa-se o nome resolve e reject nos parâmetros.
   
-  if (uberChegouEMeLevouAoBancoEm50Minutos(true)){ // Troque o true para false para simular um erro e observe o resultado.
+  if (chegueiAntesDeFechar(true)){ // Troque o true para false para simular um erro e observe o resultado.
 
     setTimeout(() => { // Utilizaremos o setTimeout para simular alguma requisição demorada, neste caso serão 5 segundos.
+    
       /* return */ deuCerto('Deu certo mãe'); // Note que você "retornou que deu certo", mas isso não interrompe o fluxo do código.
+      
       minhaMaeContinuouFazendoOAlmocoETerminou(); // Essa linha e qualquer outra abaixo seria lida.
+      
       // Para interromper o fluxo do código no momento que deu certo, descomente o return dele, isso se chama early-return.
     }, 5000);
 
@@ -113,11 +118,11 @@ const favorParaMae = new Promise((deuCerto, deuErrado) => {  // por convenção 
 
   }
 
-}).then((missaoDadaMissaoCumprida) => { // Esse .then só será executado caso "deuCerto()" aconteça.
+}).then((missaoDadaMissaoCumprida) => { // Esse .then só será executado caso "deuCerto()".
 
   return `${missaoDadaMissaoCumprida}, agora a senhora pode ficar tranquila que não pagará juros.`;
 
-}).catch((aconteceuUmImprevisto) => {  // Esse catch só será executado caso "deuErrado()" aconteça, ou se no .then() acima ocorrer algum erro.
+}).catch((aconteceuUmImprevisto) => {  // Esse catch só será executado caso "deuErrado()", ou se no .then() acima ocorrer algum erro.
 
   console.error(aconteceuUmImprevisto, ', sinto muito mãe, havia um engarrafamento e não pude chegar a tempo no banco, haverá um juros na conta.');
 
@@ -189,22 +194,116 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
 ```
  A constante promessaResolvida contém uma Promise que já está no estado fulfilled(resolvida), portanto, posso usar o .then() para fazer algo com os dados retornados pelo resolve().
  
- Note que temos 2 then(), 1 catch(), 1 then() e 1 finally(). Os 3 .then() serão executados e mostrados no console do seu navegador porquê não houve nenhum erro na execução deles.
+ Note que temos 2 then(), 1 catch(), 1 then() e 1 finally(). Os três .then() serão executados e mostrados no console do seu navegador porquê não houve nenhum erro na execução deles.
+ 
+ Caso houvesse um erro em algum dos dois primeiros .then(), o terceiro .then() seria uma continuação do .catch(). Ex: Aconteceu algum erro nos dois primeiros, você conhece os erros possíveis, você trata eles (faz alguma ação de acordo com o erro), e pode continuar sua promise retornando algum valor.
         
  Repare que todos .then() retornam algum valor, assim posso encadeá-los, fazendo em cada um alguma lógica necessária e repassando o novo valor pelo return.
  
 --- 
 ## Fetch API
-Você aprenderá utilizar o fecth(), que devolve uma Promise
+Você aprenderá utilizar o fecth(), da Fetch API dos navegadores, leia com calma o código abaixo, será explicá-lo depois. Leia os comentários do código.
+Por ser um assunto muito extenso, terá vários links nos Recursos Adicionais, foque apenas no fetch() e .json() por enquanto, será usado nos próximos projetos.
+
+```javascript
+const url = 'https://viacep.com.br/ws/01001000/json/';
+const urlComErro = 'https://viacep.com.br/ws/01001000erro/json/';
+
+const viaCep = () => {
+  return fetch(url) // fetch() devolve uma promise.
+    .then((response) => response.json()) // .json() devolve um promise, por isso podemos encadear outro .then() e fazer alguma operação com os dados.
+
+    .then((data) => { // O parâmetro data tem valor retornado do primeiro .then() com o JSON extraído da reposta(response) do fetch.
+      adicionarEndereco(data);
+      // return data; // Experimente descomentar o return data do começo da linha; e veja que no then abaixo o valor é retornado corretamente no console do navegador.
+
+    }) // Neste then, você não retornou nada, então no próximo, você não terá acesso a nenhuma informação.
+    
+    .then((data) => console.log('Verificando o valor de data:', data))  // data é undefined porquê não houve retorno no .then() acima.
+    
+    .catch((error) => console.error('Aconteceu um erro:', error)); // Experimente trocar para o urlComErro no fetch().
+}
+
+viaCep();
+
+const adicionarEndereco = ({ logradouro, bairro, localidade, uf }) => {
+  const cep = document.createElement('p');
+  cep.innerText = `Rua: ${logradouro}, ${bairro}, ${localidade} - ${uf}`;
+  const main = document.querySelector('#main-promises');
+  main.appendChild(cep);
+};
+```
+
+O fetch('https://viacep.com.br/ws/01001000/json/') vai até o endereço passado como parâmetro que neste caso devolve um arquivo no formato JSON.
+
+Coloque https://viacep.com.br/ws/01001000/json/ no seu navegador e veja o formato de um arquivo JSON.
+
+No primeiro `.then()` pegamos a resposta dessa requisição e usamos o `.json()` para extrair o JSON da resposta(response) e converter para um objeto, assim podemos manipulá-lo pelo javascript.
+
+No segundo .then() usamos o objeto javascript e adicionamos o endereço no index.html usando a função `adicionarEndereco` que já faz a desestruturação de `data` pegando apenas `{ logradouro, bairro, localidade, uf }`.
+
+No terceiro .then() estamos apenas imprimindo no console do navegador 'Verificando o valor de data: undefined' para reforçar que caso você não retorne nada no .then() anterior o parâmetro da callback do próximo .then() será undefined.
+
+No .catch(), caso aconteça algum erro no fetch() ou em algum dos três .then() acima, estaríamos imprimindo o erro no console do navegador.
+
+
+Crie uma pasta "fetch-api" com os arquivos index.html e script.js, copie e cole os códigos abaixo.
+```html5
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Aprendendo Promises, Fetch API e Async/Await</title>
+</head>
+<body>
+  <header>
+    <h1>Aprendendo Promises, Fetch API e Async/Await</h1>
+  </header>
+  <main id="main-promises">
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
+```
+```javascript
+const url = 'https://viacep.com.br/ws/01001000/json/';
+const urlComErro = 'https://viacep.com.br/ws/01001000erro/json/';
+
+const viaCep = () => {
+  return fetch(url) // fetch() devolve uma promise.
+    .then((response) => response.json())
+    .then((data) => {
+      adicionarEndereco(data);
+      // return data;
+    })    
+    .then((data) => console.log('Verificando o valor de data:', data))
+    .catch((error) => console.error('Aconteceu um erro:', error));
+};
+
+viaCep();
+
+const adicionarEndereco = ({ logradouro, bairro, localidade, uf }) => {
+  const cep = document.createElement('p');
+  cep.innerText = `Rua: ${logradouro}, ${bairro}, ${localidade} - ${uf}`;
+  const main = document.querySelector('#main-promises');
+  main.appendChild(cep);
+};
+```
+Agora faça o teste com a url de erro e observer o console do navegador.
+
+Refatore o código para receber um CEP dinamicamente, use `string literals`, adicione o DDD na linha abaixo do
 
 
 
 
 
-
+---
 ## `async` e `await`
  
- O async/await veio para facilitar o trabalho com promises, vamos refatorar o código do almoço:
+ O async/await veio para facilitar o trabalho com promises, vamos refatorar o código do ViaCep:
  ```javasript
  const favorParaMae = new Promise((deuCerto, deuErrado) => {  // por convenção usa-se o nome resolve e reject nos parâmetros.
 
