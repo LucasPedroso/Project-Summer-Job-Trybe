@@ -250,6 +250,8 @@ No .catch(), caso aconteça algum erro no fetch() ou em algum dos três .then() 
 
 
 Crie uma pasta "fetch-api" com os arquivos index.html e script.js, copie e cole os códigos abaixo.
+
+index.html
 ```html
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -270,7 +272,7 @@ Crie uma pasta "fetch-api" com os arquivos index.html e script.js, copie e cole 
 </body>
 </html>
 ```
-
+script.js
 ```javascript
 const url = 'https://viacep.com.br/ws/01001000/json/';
 const urlComErro = 'https://viacep.com.br/ws/01001000erro/json/';
@@ -299,6 +301,7 @@ Agora faça o teste com a url de erro e observer o console do navegador.
 
 Você agora aprenderá como pegar uma promise e usá-la em outro lugar de seu código, usando o .then() e .catch() posteriormente.
 
+Copie e cole os códigos abaixo:
 
 index.html
 ```html
@@ -410,7 +413,7 @@ const funcaoAssincrona = async () => { // Você colocará o async antes da funç
     if (xablau.todosResponderamForms === true) {
       console.log('Uhullll #goTrybe');
     } else {
-      throw new Error('Precisamos responder o forms tribo.'); // Isso será explicado na aula ao vivo. Metodologia ativa!!!
+      throw new Error('Precisamos responder o forms tribo.'); // Isso será explicado na aula ao vivo.
     }
 
   } catch (error) { // Caso aconteça algum erro dentro do try, o código irá direto para o catch.
@@ -463,7 +466,7 @@ window.onload = () => {
  ```
 ---
 # Vamos fazer juntos!
-  Você leu os textos e os recursos adicionais!? Então vamos para a aula ao vivo! Ela será dividida em dois momentos: primeiro, vamos discutir os exemplos comentados e tirar dúvidas. Depois, teremos uma explicação geral sobre promises onde faremos um exemplo de uso de Promises em comunicação com uma API, tirando dúvidas ao final.
+  Você leu os textos e os recursos adicionais!? Então vamos para a aula ao vivo! Ela será dividida em dois momentos: primeiro, vamos discutir os exemplos comentados e tirar dúvidas. Depois, teremos uma explicação geral sobre promises e `throw new Error()` onde faremos um exemplo de uso de Promises em comunicação com uma API, tirando dúvidas ao final.
 Vamos para o Slack, onde o link estará disponível.
   
 ---
