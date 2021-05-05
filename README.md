@@ -64,6 +64,10 @@
  `Promise.resolve(valor)` = Quando você quer transformar um valor qualquer em uma promise já resolvida.
 
  `Promise.reject(valor)` = Quando você quer transformar um valor qualquer em uma promise que foi rejeitada por algum motivo.
+ 
+ `Promise.all([promises])` = 
+ 
+ `Promise.race([promises])` =
 
  `.then(funcaoDeCallback)` = Quando você tem uma promise resolvida e quer fazer algo com ela, modificar os dados, colocar na sua tela, etc.
  
@@ -89,6 +93,7 @@
  
  O detalhe é que você começou a fazer o almoço e colocou o feijão e o arroz no fogo, e isso não pode parar enquanto você vai ao banco para sua mãe, você pede a ela que ela cuide das panelas enquanto tentará ir ao banco antes que feche.
  
+ Para compreender se atente aos comentários.
 ```javascript
 let almoco = { // O objeto almoco será modificado no decorrer da promise.
   feijao: 'Cozinhando',
@@ -173,6 +178,7 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
 
 
  Observe o exemplo que será explicado abaixo com detalhes. Não se preocupe com o .catch() e .finally() por enquanto.
+ Para compreender se atente aos comentários.
 ```javascript
         const promessaResolvida = Promise.resolve('Fiz os exercícios diários')
           .then((dados) => { // O parametro dados passado na callback do .then contém o que foi retornado no resolve().
@@ -206,7 +212,7 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
  
 --- 
 ## Fetch API
-Você aprenderá utilizar o fecth() e o método .json(), da Fetch API dos navegadores, leia com calma o código abaixo, será explicado depois. Leia os comentários do código.
+Você aprenderá utilizar o fecth() e o método .json(), da Fetch API dos navegadores, leia com calma o código abaixo, será explicado depois. Para compreender se atente aos comentários.
 Por ser um assunto muito extenso, terá vários links nos Recursos Adicionais, foque apenas no fetch() e .json() por enquanto, será usado nos próximos projetos.
 
 ```javascript
@@ -361,7 +367,7 @@ index.html
 </html>
 ```
 
-script.js ( Leia os comentários )
+script.js ( Para compreender se atente aos comentários. )
 ```javascript
 const viaCep = (cep) => { // Você pode retornar um promise e continuar usando o .then() em outro local do seu script. Observe na função adicionarEndereco()
   return fetch(`https://viacep.com.br/ws/${cep}/json/`)
@@ -408,14 +414,14 @@ Digite um cep errado e observe que o .catch() chamado na função adicionarEnder
 
 ### Uma breve introdução a async/await usando try/catch/finally
 
-Você observará que é o mesmo conceito da promise, apenas com uma sintaxe diferente. ( Leia os comentários )
+Você observará que é o mesmo conceito da promise, apenas com uma sintaxe diferente. Para compreender se atente aos comentários.
 
 ```javascript
 const funcaoAssincrona = async () => { // Você colocará o async antes da função para transformá-la em uma função assíncrona.
 
   try { // Dentro do try é aonde você chamará seu código assíncrono com o await.
 
-    const forms = await fetch('urlForms'); // O await faz que o código pare nessa linha até que fetch retorne uma resposta.
+    const forms = await fetch('urlForms'); // O await faz com que o código pare nessa linha até que fetch retorne uma resposta.
     const xablau = await forms.json(); // Essa linha só será executada após a linha acima estiver com a resposta do fetch().
 
     if (xablau.todosResponderamForms === true) {
@@ -472,6 +478,9 @@ window.onload = () => {
   document.querySelector('#btn-viacep').addEventListener('click', adicionarEndereco);
 };
  ```
+### Agora faça um exercícios de fixação.
+  Você tem o código viaCep no formato de Promise e async/await, para reforçar o aprendizado, refatore o de promise para async/await e o de awync/await para promise. (Caso você fique com dúvida, releia os exemplos.)
+ 
 ---
 # Vamos fazer juntos!
   Você leu os textos e os recursos adicionais!? Então vamos para a aula ao vivo! Ela será dividida em dois momentos: primeiro, vamos discutir os exemplos comentados e tirar dúvidas. Depois, teremos uma explicação geral sobre promises e `throw new Error()` onde faremos um exemplo de uso de Promises em comunicação com uma API, também será explicado sobre a thread síncrona e assíncrona, tirando dúvidas ao final.
@@ -482,7 +491,7 @@ Vamos para o Slack, onde o link estará disponível.
 ## Agora, a prática!
   Você irá criar uma Pokébola Digital.
   Ela irá buscar tanto pelo nome, quanto pelo id do pokémon.
-  Você irá implementar as funções `fetchPokeApi` e `addPokemon`, é muito importante que faça primeiro no formato de promise e só depois refatorar para asyn/await para praticar o conhecimento adquirido.
+  Você irá implementar as funções `fetchPokeApi` e `addPokemon`. É muito importante que faça primeiro no formato de promise e só depois refatorar para async/await para praticar o conhecimento adquirido.
 
   1. Na função fetchPokeApi, utilize o fetch() para buscar no endereço da API https://pokeapi.co/api/v2/pokemon/pikachu.
   2. Faça um .then() e extraia o json da resposta do fetch().
@@ -492,9 +501,11 @@ Vamos para o Slack, onde o link estará disponível.
   6. Encadeie um .then() e use a função setPokemonInfos.
   7. Encadeie um .catch() e caso aconteça um erro, faça ele imprimir um console.error() passando o erro como argumento.
   8. Ainda no .catch() coloque no span com id="error" a msg "Digite o nome de um Pokémon ou um número válido e tente novamente."
-
+  9. Faça uma cópia do seu arquivo .js e refatore para usar async/await.
+  
 
 ## Bônus
+  1. E
 
 ---
 # Recursos adicionais
