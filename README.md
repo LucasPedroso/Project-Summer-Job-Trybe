@@ -46,9 +46,9 @@
 
  pending (pendente): Estado inicial, que ainda não foi resolvida e nem rejeitada.
  
- fulfilled (resolvida): Quando ocorreu tudo bem e foi resolvida ( resolve(valor) )
+ fulfilled (resolvida): Quando ocorreu tudo bem e foi resolvida ( resolve(valor) ).
  
- rejected (rejeitada):  Quando houve um erro e foi rejeitada ( reject(valor) )
+ rejected (rejeitada):  Quando houve um erro e foi rejeitada ( reject(valor) ).
 ```javascript
  const novaPromessa = new Promise((resolve, reject) => { /* Ex: buscar dados em uma API com fetch(), veremos isto daqui a pouco. */ });
  // retorna uma promise, no estado pendente, até que seja resolvida ou rejeitada.
@@ -75,7 +75,7 @@
  
  `.finally(funcaoDeCallback)` = Quando você precisa fazer algo independente se a promise for resolvida ou rejeitada. Ex: Fechar a conexão com um banco de dados.
  
- **Obs**: A função de callback de .finally() não recebe nenhum parâmetro, pois nunca se sabe se vai ser resolvida ou rejeitada. Ela apenas faz uma ação.(Retorno void)
+ **Obs**: A função de callback de .finally() não recebe nenhum parâmetro, pois nunca se sabe se vai ser resolvida ou rejeitada. Ela apenas faz uma ação (Retorno void).
 
  `new Promise(funcaoDeCallback)` = Quando você quer criar uma promise que ainda não foi resolvida nem rejeitada.
  
@@ -84,7 +84,9 @@
 
 #### Vamos a outro exemplo usando uma abstração da vida real:
 
- Sua mãe te pede para ir ao banco para ela para pagar uma conta, mas isso precisa ser feito em 50 minutos, o banco está para fechar e caso não consiga chegar a tempo ela pagará juros. Você terá que chamar o Uber e ir ao banco no tempo pedido, mas o que pode dar de errado né? Humm, por acaso tem um engarrafamento, um pneu fura, etc. Você só sabe que irá, mas não sabe se vai conseguir chegar a tempo ou não, é aí que entra as Promises e seus callbacks "deuCerto, deuErrado", que por convenção é `(resolve, reject)`.
+ Sua mãe te pede para ir ao banco para ela para pagar uma conta, mas isso precisa ser feito em 50 minutos, o banco está para fechar e caso não consiga chegar a tempo ela pagará juros. Você terá que chamar o Uber e ir ao banco no tempo pedido, mas o que pode dar de errado né? Humm, por acaso tem um engarrafamento, um pneu fura, etc.
+ Você só sabe que irá, mas não sabe se vai conseguir chegar a tempo ou não, é aí que entra as Promises e seus callbacks "deuCerto, deuErrado", que por convenção é `(resolve, reject)`.
+ 
  O detalhe é que você começou a fazer o almoço e colocou o feijão e o arroz no fogo, e isso não pode parar enquanto você vai ao banco para sua mãe, você pede a ela que ela cuide das panelas enquanto tentará ir ao banco antes que feche.
  
 ```javascript
@@ -154,7 +156,7 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
 
 ```javascript
         Promise.resolve('Promessa resolvida')
-          .then((dados) => console.log(dados))  // Irá imprimir 'Promessa resolvida' no console do navegador.
+          .then((dados) => console.log(dados));  // Irá imprimir 'Promessa resolvida' no console do navegador.
 ```
  O `.then((dados) => {...})` recebe uma função de callback, tenha em mente que o parâmetro(dados) passado para essa callback vem do retorno de `resolve('Promessa resolvida')`
         
@@ -163,9 +165,9 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
 ```javascript
         Promise.resolve('Promessa resolvida')
           .then((dados) => {
-            console.log(dados)
+            console.log(dados);
             return `${dados}, e modificada dentro do then`;
-          }).then((dados) => console.log(dados))
+          }).then((dados) => console.log(dados));
 ```
  Sempre que você quiser usar outro .then(), o anterior precisa retornar algo.
 
@@ -192,7 +194,7 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
             console.log(dadosModificados3);
             return dadosModificados3;
           })
-          .finally(() => { console.log('Resolve - Isso acontece de qualquer forma, dando erro ou não')});
+          .finally(() => { console.log('Resolve - Isso acontece de qualquer forma, dando erro ou não'); });
 ```
  A constante promessaResolvida contém uma Promise que já está no estado fulfilled(resolvida), portanto, posso usar o .then() para fazer algo com os dados retornados pelo resolve().
  
@@ -301,6 +303,8 @@ Agora faça o teste com a url de erro e observer o console do navegador.
 
 Você agora aprenderá como pegar uma promise e usá-la em outro lugar de seu código, usando o .then() e .catch() posteriormente.
 
+Você verá a explicação nos comentários do arquivo script.js
+
 Copie e cole os códigos abaixo:
 
 index.html
@@ -393,9 +397,13 @@ Digite um cep errado e observe que o .catch() chamado na função adicionarEnder
 
 
 ---
-## `async`/`await` com `try`/`catch`/`finally`
+## async/await com try/catch/finally
  
  O async/await veio para facilitar o trabalho com promises, tornando menos verboso e de fácil leitura.
+ 
+ Se você coloca o `await` antes de um código assíncrono, ele para a execução do script síncrono até que seu código assíncrono seja executado, mas para usar o `await` você precisa de uma função assíncrona, você faz isso colocando antes dela um `async`.
+ 
+ Ex: `async function xablau() { ... }` ou `const xablau = async () => { ... }`
  
 
 ### Uma breve introdução a async/await usando try/catch/finally
@@ -430,7 +438,7 @@ const funcaoAssincrona = async () => { // Você colocará o async antes da funç
 ```
 
 
- Veja o código do ViaCep refatorado com async e await:
+ Agora você verá o código do ViaCep refatorado com async e await:
  ```javascript
  const viaCep = async (cep) => {
   const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
@@ -466,13 +474,27 @@ window.onload = () => {
  ```
 ---
 # Vamos fazer juntos!
-  Você leu os textos e os recursos adicionais!? Então vamos para a aula ao vivo! Ela será dividida em dois momentos: primeiro, vamos discutir os exemplos comentados e tirar dúvidas. Depois, teremos uma explicação geral sobre promises e `throw new Error()` onde faremos um exemplo de uso de Promises em comunicação com uma API, tirando dúvidas ao final.
+  Você leu os textos e os recursos adicionais!? Então vamos para a aula ao vivo! Ela será dividida em dois momentos: primeiro, vamos discutir os exemplos comentados e tirar dúvidas. Depois, teremos uma explicação geral sobre promises e `throw new Error()` onde faremos um exemplo de uso de Promises em comunicação com uma API, também será explicado sobre a thread síncrona e assíncrona, tirando dúvidas ao final.
 Vamos para o Slack, onde o link estará disponível.
   
 ---
 # Exercícios
-## Agora, a prática
-## Bonus
+## Agora, a prática!
+  Você irá criar uma Pokébola Digital.
+  Ela irá buscar tanto pelo nome, quanto pelo id do pokémon.
+  Você irá implementar as funções `fetchPokeApi` e `addPokemon`, é muito importante que faça primeiro no formato de promise e só depois refatorar para asyn/await para praticar o conhecimento adquirido.
+
+  1. Na função fetchPokeApi, utilize o fetch() para buscar no endereço da API https://pokeapi.co/api/v2/pokemon/pikachu.
+  2. Faça um .then() e extraia o json da resposta do fetch().
+  3. Coloque um parâmetro na função fetchPokeApi.
+  4. Troque o parâmetro do fetch() para string literals, coloque o parâmetro que acabou de criar na fetchPokeApi no lugar de pikachu.
+  5. No addPokemon, chame a função fetchPokeApi passando a constante pokemon como argumento.
+  6. Encadeie um .then() e use a função setPokemonInfos.
+  7. Encadeie um .catch() e caso aconteça um erro, faça ele imprimir um console.error() passando o erro como argumento.
+  8. Ainda no .catch() coloque no span com id="error" a msg "Digite o nome de um Pokémon ou um número válido e tente novamente."
+
+
+## Bônus
 
 ---
 # Recursos adicionais
