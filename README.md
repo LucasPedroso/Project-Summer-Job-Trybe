@@ -397,7 +397,8 @@ Digite um cep errado e observe que o .catch() chamado na função adicionarEnder
 
 ### Uma breve introdução a async/await usando try/catch/finally
 
-Você observará que é o mesmo conceito da promise, apenas com uma sintaxe diferente.
+Você observará que é o mesmo conceito da promise, apenas com uma sintaxe diferente. ( Leia os comentários )
+
 ```javascript
 const funcaoAssincrona = async () => { // Você colocará o async antes da função para transformá-la em uma função assíncrona.
 
@@ -418,7 +419,7 @@ const funcaoAssincrona = async () => { // Você colocará o async antes da funç
 
   } finally { // O que estiver aqui dentro será executado de qualquer forma.
   
-    console.log('Hoje eu responderei o forms. Combinado!?')
+    console.log('Hoje você responderá o forms. Combinado!?')
     
   }
 
@@ -460,19 +461,16 @@ window.onload = () => {
   document.querySelector('#btn-viacep').addEventListener('click', adicionarEndereco);
 };
  ```
-
-
 ---
-Recapitulando
-
 # Vamos fazer juntos!
-  Leu os textos?! Respondeu e discutiu as perguntas? Vamos para a aula ao vivo, então! Ela será dividida em dois momentos: primeiro, vamos discutir os exercícios de fixação e tirar dúvidas. Chegue na aula com os exercícios respondidos, hein? Depois, teremos uma aula expositiva onde faremos um exemplo de uso de Promises em comunicação com uma API , tirando dúvidas ao final.
+  Você leu os textos e os recursos adicionais!? Então vamos para a aula ao vivo! Ela será dividida em dois momentos: primeiro, vamos discutir os exemplos comentados e tirar dúvidas. Depois, teremos uma explicação geral sobre promises onde faremos um exemplo de uso de Promises em comunicação com uma API, tirando dúvidas ao final.
 Vamos para o Slack, onde o link estará disponível.
   
+---
+# Exercícios
+## Agora, a prática
+## Bonus
 
-  Exercícios
-  Agora, a prática
-  Bonus
+---
+# Recursos adicionais
 
-  Recursos adicionais
-  Links para recursos adicionais
