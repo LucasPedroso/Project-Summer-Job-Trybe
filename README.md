@@ -398,7 +398,7 @@ Digite um cep errado e observe que o .catch() chamado na função adicionarEnder
 ### Uma breve introdução a async/await usando try/catch/finally
 
 Você observará que é o mesmo conceito da promise, apenas com uma sintaxe diferente.
-```javasript
+```javascript
 const funcaoAssincrona = async () => { // Você colocará o async antes da função para transformá-la em uma função assíncrona.
 
   try { // Dentro do try é aonde você chamará seu código assíncrono com o await.
