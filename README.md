@@ -250,7 +250,7 @@ No .catch(), caso aconteça algum erro no fetch() ou em algum dos três .then() 
 
 
 Crie uma pasta "fetch-api" com os arquivos index.html e script.js, copie e cole os códigos abaixo.
-```html5
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -297,8 +297,10 @@ const adicionarEndereco = ({ logradouro, bairro, localidade, uf }) => {
 ```
 Agora faça o teste com a url de erro e observer o console do navegador.
 
-Observe o código abaixo refatorado para buscar um cep dinamicamente.
+Você agora aprenderá como pegar uma promise e usá-la em outro lugar de seu código, usando o .then() e .catch() posteriormente.
 
+
+index.html
 ```html
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -351,46 +353,116 @@ Observe o código abaixo refatorado para buscar um cep dinamicamente.
 </body>
 </html>
 ```
+
+script.js ( Leia os comentários )
 ```javascript
-const viaCep = (cep) => {
+const viaCep = (cep) => { // Você pode retornar um promise e continuar usando o .then() em outro local do seu script. Observe na função adicionarEndereco()
   return fetch(`https://viacep.com.br/ws/${cep}/json/`)
   .then((response) => response.json());
 };
 
-const getInputValue = (query) => document.querySelector(query).value;
-const setInputValue = (query, value) => document.querySelector(query).value = value;
+const pegarInputValue = (query) => document.querySelector(query).value;
+const setarInputValue = (query, value) => document.querySelector(query).value = value;
 
-const addAddress = () => {
+const setarInputsValues = ({ logradouro, bairro, localidade, uf }) => { // A função que será passada de callback para o .then() de adicionarEndereco().
+  setarInputValue('#input-logradouro', logradouro);
+  setarInputValue('#input-bairro', bairro);
+  setarInputValue('#input-localidade', localidade);
+  setarInputValue('#input-uf', uf);
+};
+
+const adicionarEndereco = () => {
   document.querySelector('#error').textContent = '';
-  const cep = getInputValue('#input-viacep');
-  viaCep(cep)
-    .then(({ logradouro, bairro, localidade, uf }) => {
-      setInputValue('#input-logradouro', logradouro);
-      setInputValue('#input-bairro', bairro);
-      setInputValue('#input-localidade', localidade);
-      setInputValue('#input-uf', uf);
-    })
-    .catch((error) => {
-      console.error('Ocorreu um erro:', error);
+  const cep = pegarInputValue('#input-viacep');
+  viaCep(cep) // Veja que aqui você chama a função viaCep e continuar usando o .then(), o .catch() e finally().
+    .then(setarInputsValues)
+    .catch((erro) => {
+      console.error('Ocorreu um erro:', erro);
       document.querySelector('#error').textContent = 'Digite um CEP válido e tente novamente.';
     });
 };
 
 window.onload = () => {
-  document.querySelector('#btn-viacep').addEventListener('click', addAddress);
+  document.querySelector('#btn-viacep').addEventListener('click', adicionarEndereco);
 };
 ```
-
-
+Digite um cep errado e observe que o .catch() chamado na função adicionarEndereco() é executado.
 
 
 ---
-## `async` e `await`
+## `async`/`await` com `try`/`catch`/`finally`
  
- O async/await veio para facilitar o trabalho com promises, vamos refatorar o código do ViaCep:
- ```javasript
+ O async/await veio para facilitar o trabalho com promises, tornando menos verboso e de fácil leitura.
+ 
 
+### Uma breve introdução a async/await usando try/catch/finally
+
+Você observará que é o mesmo conceito da promise, apenas com uma sintaxe diferente.
+```javasript
+const funcaoAssincrona = async () => { // Você colocará o async antes da função para transformá-la em uma função assíncrona.
+
+  try { // Dentro do try é aonde você chamará seu código assíncrono com o await.
+
+    const forms = await fetch('urlForms'); // O await faz que o código pare nessa linha até que fetch retorne uma resposta.
+    const xablau = await forms.json(); // Essa linha só será executada após a linha acima estiver com a resposta do fetch().
+
+    if (xablau.todosResponderamForms === true) {
+      console.log('Uhullll #goTrybe');
+    } else {
+      throw new Error('Precisamos responder o forms tribo.'); // Isso será explicado na aula ao vivo. Metodologia ativa!!!
+    }
+
+  } catch (error) { // Caso aconteça algum erro dentro do try, o código irá direto para o catch.
+
+    console.error(error);
+
+  } finally { // O que estiver aqui dentro será executado de qualquer forma.
+  
+    console.log('Hoje eu responderei o forms. Combinado!?')
+    
+  }
+
+}
 ```
+
+
+ Veja o código do ViaCep refatorado com async e await:
+ ```javascript
+ const viaCep = async (cep) => {
+  const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+  return await response.json();
+};
+
+const pegarInputValue = (query) => document.querySelector(query).value;
+const setarInputValue = (query, value) => document.querySelector(query).value = value;
+
+const setarInputsValues = ({ logradouro, bairro, localidade, uf }) => {
+  setarInputValue('#input-logradouro', logradouro);
+  setarInputValue('#input-bairro', bairro);
+  setarInputValue('#input-localidade', localidade);
+  setarInputValue('#input-uf', uf);
+};
+
+const adicionarEndereco = async () => {
+  document.querySelector('#error').textContent = '';
+  const cep = pegarInputValue('#input-viacep');
+
+  try {
+    const dataViaCep = await viaCep(cep);
+    setarInputsValues(dataViaCep);
+  } catch (error) {
+    console.error('Ocorreu um erro:', error);
+    document.querySelector('#error').textContent = 'Digite um CEP válido e tente novamente.';
+  }
+};
+
+window.onload = () => {
+  document.querySelector('#btn-viacep').addEventListener('click', adicionarEndereco);
+};
+ ```
+
+
+---
 Recapitulando
 
 # Vamos fazer juntos!
