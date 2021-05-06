@@ -4,98 +4,98 @@
 
 
 ## O que vamos aprender?
-  Você aprenderá a utilizar promises para fazer chamadas assíncronas em API's de terceiros, utilizando o fetch().
+  * Você vai aprender a utilizar promises para fazer chamadas assíncronas em API's de terceiros, utilizando o fetch().
   
-  Irá aprender quais são os estágios de uma promise e como retornar um resultado ou um erro.
+  * Quais são os estágios de uma promise e como retornar um resultado ou um erro.
   
-  Entenderá o .then() e como encadeá-los, .catch() e .finally().
+  * Entenderá o .then() e como encadeá-los, o .catch() e .finally().
 
 
 ---
 ## Você será capaz de:
- Fazer chamadas assíncronas em API's de terceiros com fetch().
+ * Fazer chamadas assíncronas em API's de terceiros com o fetch().
  
- Encadear vários .then() e entendê-los.
+ * Encadear vários .then() e como ele funciona.
  
- Tratar erros caso aconteça.
+ * Tratar possíveis erros no .catch() caso aconteçam.
 
 
 ---
 ## Por que isso é importante?
-  As promises vieram para resolver problemas das callbacks e podem ser usadas para fazer requisições assíncronas a uma URL (endereço de um site) sem travar o seu código. Imagine que você tivesse que esperar seu código ir até algum site, esperar ele responder com algum dado e só depois continuasse a ler seu código javascript, lembrando que algumas requisições podem demorar alguns segundos ou mais, sua página ficaria um pouco mais lenta, não é verdade!?
+  As Promises vieram para resolver problemas das callbacks e podem ser usadas para fazer requisições assíncronas a uma URL (endereço de um site) sem travar o seu código. Imagine que você precisasse esperar seu código ir até algum site, aguardar ele responder com algum dado e só depois continuasse a ler seu código javascript. Vale lembrar que algumas requisições podem demorar alguns segundos ou mais, portanto, sua página ficaria um pouco mais lenta, não é verdade?!
   
-  Outro cenário seria o acesso de alguma informação em um banco de dados e esse procedimento não pode travar sua aplicação enquanto busca informações em seu banco de dados, para isso você usará uma função assíncrona.
+  Outro cenário seria o acesso a alguma informação em um banco de dados e esse procedimento não deveria travar sua aplicação enquanto busca essas informações, para isso você vai usar uma função assíncrona.
   
-  Na sua carreira como pessoa desenvolvedora, você (realizara esse procedimento muitas vezes)precisará acessar API's de terceiros e banco de dados muitas vezes, o que torna a compreensão de códigos assíncronos (algo muito importante)uma necessidade.
+  Na sua carreira como pessoa desenvolvedora, você realizará esse procedimento muitas vezes e vai precisar acessar API's de terceiros e banco de dados muitas vezes, o que torna a compreensão de códigos assíncronos algo muito importante.
 
 
 # Conteúdos
 ---
 ## Promises
- Fazendo uma abstração de uma Promise, ela é como um acordo que você faz contigo.
- Ex: Quando você promete que vai começar a fazer exercícios físicos diaramente, a cada dia que você fizer você terá um return ('Fiz os exercícios diários') e o dia que você não fizer você terá um return ('Não fiz os exercícios diários'), sendo assim, quando você faz a promessa no começo do dia, nunca sabe se vai dar certo ou errado, pode surgir imprevistos e você não ter tempo para fazer seus exercícios diários.
+ Fazendo uma abstração de uma Promise, ela é como um acordo pessoal, igual ao exemplo abaixo.
+ Ex: Quando você promete que vai começar a fazer exercícios físicos diaramente, a cada dia que você fizer você terá um return ('Fiz os exercícios diários') e o dia que você não fizer você terá um return ('Não fiz os exercícios diários'). Sendo assim, quando você faz a promessa no começo do dia, nunca vai saber se vai dar certo ou errado, pode surgir imprevistos e você não ter tempo para fazer seus exercícios diários.
 
- Em promises temos um método próprio para quando algo der certo ou quando der errado, sendo eles, resolve() e reject() respectivamente, pense neles como os return citados acima.
+ Em promises temos um método próprio para quando algo der certo ou quando der errado, sendo eles resolve() e reject() respectivamente. Pense neles como os returns citados acima.
 ```javascript
  const minhaPromessa = Promise.resolve('Minha promessa');
  ```
         
- Promise.resolve() retorna uma promise, assim como .then() e .catch(), sendo assim você pode encadeá-los e fazer ações com os dados.
+ Promise.resolve() retorna uma Promise, assim como o .then() e o .catch(), sendo assim você pode encadeá-los e fazer ações com os dados.
 
 ### Uma Promise tem 3 estados:
 
- pending (pendente): Estado inicial, que ainda não foi resolvida e nem rejeitada.
+ pending (pendente): Estado inicial, ainda não foi resolvida e nem rejeitada.
  
  fulfilled (resolvida): Quando ocorreu tudo bem e foi resolvida ( resolve(valor) ).
  
  rejected (rejeitada):  Quando houve um erro e foi rejeitada ( reject(valor) ).
 ```javascript
  const novaPromessa = new Promise((resolve, reject) => { /* Ex: buscar dados em uma API com fetch(), veremos isto daqui a pouco. */ });
- // retorna uma promise, no estado pendente, até que seja resolvida ou rejeitada.
+ // Retorna uma Promise, no estado pendente, até que seja resolvida ou rejeitada.
  
  const promessaResolvida = Promise.resolve('Resolvida');
- // retorna uma promise resolvida, no estado fulfilled.
+ // Retorna uma Promise resolvida, no estado fulfilled.
  
  const promessaRejeitada = Promise.reject('Rejeitada');
- // retorna uma promise rejeitada, no estado reject.
+ // Retorna uma Promise rejeitada, no estado reject.
 ```
 ## Uma breve introdução ao mundo de Promises:
 
- `Promise.resolve(valor)` = Quando você quer transformar um valor qualquer em uma promise já resolvida.
+ `Promise.resolve(valor)` = Quando você quer transformar um valor qualquer em uma Promise já resolvida.
 
- `Promise.reject(valor)` = Quando você quer transformar um valor qualquer em uma promise que foi rejeitada por algum motivo.
+ `Promise.reject(valor)` = Quando você quer transformar um valor qualquer em uma Promise que foi rejeitada por algum motivo.
  
  `Promise.all([promises])` = 
  
  `Promise.race([promises])` =
 
- `.then(funcaoDeCallback)` = Quando você tem uma promise resolvida e quer fazer algo com ela, modificar os dados, colocar na sua tela, etc.
+ `.then(funcaoDeCallback)` = Quando você tem uma Promise resolvida e quer fazer algo com ela, como: modificar os dados, colocar na sua tela, etc.
  
- **Obs**: A função de callback de .then() tem que receber 1 parâmetro, sendo ele o retorno da última promise resolvida.
+ **Obs**: A função de callback do .then() tem que receber 1 parâmetro, sendo ele o retorno da última Promise resolvida.
 
- `.catch(funcaoDeCallback)` = Quando ocorre algum erro em qualquer promise acima deste catch(Lembrando que resolve, reject e then retornam promises), o código irá para o .catch, é usado para tratar erros.
+ `.catch(funcaoDeCallback)` = Quando ocorre algum erro em qualquer Promise acima deste .catch() (Lembrando que resolve, reject e then retornam Promises), o código irá para o .catch() e você pode usá-lo para tratar erros.
  
- **Obs**: A função de callback de .catch() tem que receber 1 parâmetro, sendo ele o erro que aconteceu no seu reject do new Promise ou caso aconteça algum erro nos .then acima dele.
+ **Obs**: A função de callback do .catch() tem que receber 1 parâmetro, sendo ele o erro que aconteceu no seu reject do new Promise ou caso aconteça algum erro nos .then() acima dele.
  
- `.finally(funcaoDeCallback)` = Quando você precisa fazer algo independente se a promise for resolvida ou rejeitada. Ex: Fechar a conexão com um banco de dados.
+ `.finally(funcaoDeCallback)` = Quando você precisa fazer algo, independente se a Promise for resolvida ou rejeitada. Ex: Fechar a conexão com um banco de dados.
  
- **Obs**: A função de callback de .finally() não recebe nenhum parâmetro, pois nunca se sabe se vai ser resolvida ou rejeitada. Ela apenas faz uma ação (Retorno void).
+ **Obs**: A função de callback do .finally() não recebe nenhum parâmetro, pois nunca se sabe se vai ser resolvida ou rejeitada, ela apenas faz uma ação (Retorno void).
 
  `new Promise(funcaoDeCallback)` = Quando você quer criar uma promise que ainda não foi resolvida nem rejeitada.
  
- **Obs**: A função de callback de new Promise(), tem que receber 2 parâmetros, sendo o primeiro para quando ela for resolvida(Tudo ocorreu bem) e o segundo para quando for rejeitada(Algo deu errado).
+ **Obs**: A função de callback do new Promise(), tem que receber 2 parâmetros, sendo o primeiro para quando ela for resolvida (Tudo ocorreu bem) e o segundo para quando for rejeitada (Algo deu errado).
 
 
 #### Vamos a outro exemplo usando uma abstração da vida real:
 
- Sua mãe te pede para ir ao banco para ela para pagar uma conta, mas isso precisa ser feito em 50 minutos, o banco está para fechar e caso não consiga chegar a tempo ela pagará juros. Você terá que chamar o Uber e ir ao banco no tempo pedido, mas o que pode dar de errado né? Humm, por acaso tem um engarrafamento, um pneu fura, etc.
- Você só sabe que irá, mas não sabe se vai conseguir chegar a tempo ou não, é aí que entra as Promises e seus callbacks "deuCerto, deuErrado", que por convenção é `(resolve, reject)`.
+ Sua mãe te pede para ir ao banco pagar uma conta, mas isso precisa ser feito em 50 minutos, pois o banco está para fechar e caso não consiga chegar a tempo ela pagará juros. Você terá que chamar o Uber e ir ao banco no tempo pedido, mas o que poderia dar de errado, né?! Humm, vai que aconteça um engarrafamento, um pneu fura, etc.
+ Você só sabe que irá, mas não sabe se vai conseguir chegar a tempo ou não, é aí que entra a Promise e seus callbacks (deuCerto, deuErrado), que por convenção é `(resolve, reject)`.
  
- O detalhe é que você começou a fazer o almoço e colocou o feijão e o arroz no fogo, e isso não pode parar enquanto você vai ao banco para sua mãe, você pede a ela que ela cuide das panelas enquanto tentará ir ao banco antes que feche.
+ O detalhe é que você começou a fazer o almoço e colocou o feijão e o arroz no fogo, e isso não pode parar enquanto você vai ao banco para sua mãe. Você pede a ela que cuide das panelas enquanto tentará ir ao banco antes que feche.
  
- Para compreender se atente aos comentários.
+ Para compreender melhor, se atente aos comentários.
 ```javascript
-let almoco = { // O objeto almoco será modificado no decorrer da promise.
+let almoco = { // O objeto almoco será modificado no decorrer da Promise.
   feijao: 'Cozinhando',
   arroz: 'Cozinhando',
   almocoPronto: false,
@@ -105,15 +105,15 @@ const chegueiAntesDeFechar = (consegui) => { // Função para simular se houve o
   return consegui;
 };
 
-const favorParaMae = new Promise((deuCerto, deuErrado) => {  // por convenção usa-se o nome resolve e reject nos parâmetros.
+const favorParaMae = new Promise((deuCerto, deuErrado) => {  // Por convenção usa-se o nome resolve e reject nos parâmetros.
   
   if (chegueiAntesDeFechar(true)){ // Troque o true para false para simular um erro e observe o resultado.
 
     setTimeout(() => { // Utilizaremos o setTimeout para simular alguma requisição demorada, neste caso serão 5 segundos.
     
-      /* return */ deuCerto('Deu certo mãe'); // Note que você "retornou que deu certo", mas isso não interrompe o fluxo do código.
+      /* return */ deuCerto('Deu certo mãe'); // Note que você "retornou que deuCerto()", mas isso não interrompe o fluxo do código.
       
-      minhaMaeContinuouFazendoOAlmocoETerminou(); // Essa linha e qualquer outra abaixo seria lida.
+      minhaMaeContinuouFazendoOAlmocoETerminou(); // Essa linha e qualquer outra abaixo seria lida porque não houve um return na linha acima.
       
       // Para interromper o fluxo do código no momento que deu certo, descomente o return dele, isso se chama early-return.
     }, 5000);
@@ -121,21 +121,21 @@ const favorParaMae = new Promise((deuCerto, deuErrado) => {  // por convenção 
   } else {
 
     setTimeout(() => {
-      deuErrado('Deu Errado mãe, ocorreu um imprevisto e não vou chegar a tempo');
+      deuErrado('Deu errado mãe, ocorreu um imprevisto e não vou chegar a tempo');
       minhaMaeContinuouFazendoOAlmocoETerminou();
     }, 5000);
 
   }
 
-}).then((missaoDadaMissaoCumprida) => { // Esse .then só será executado caso "deuCerto()".
+}).then((missaoDadaMissaoCumprida) => { // Esse .then() só será executado caso "deuCerto()".
 
   return `${missaoDadaMissaoCumprida}, agora a senhora pode ficar tranquila que não pagará juros.`;
 
-}).catch((aconteceuUmImprevisto) => {  // Esse catch só será executado caso "deuErrado()", ou se no .then() acima ocorrer algum erro.
+}).catch((aconteceuUmImprevisto) => {  // Esse .catch() só será executado caso "deuErrado()" ou se no .then() acima ocorrer algum erro.
 
   console.error(aconteceuUmImprevisto, ', sinto muito mãe, havia um engarrafamento e não pude chegar a tempo no banco, haverá um juros na conta.');
 
-}).finally(() => { // finally sempre será executado, não importa se a promise foi resolvida ou rejeitada.
+}).finally(() => { // .finally() sempre será executado, não importa se a Promise foi resolvida ou rejeitada.
   console.table(almoco);
 });
 
@@ -147,14 +147,14 @@ const minhaMaeContinuouFazendoOAlmocoETerminou = () => {
   };
 };
 
-/* almoco = { // Descomente essa linha e veja que almoco foi modificado enquanto sua promise estava descobrindo se iria ser resolvida ou rejeitada.
+/* almoco = { // Descomente essa linha e veja que almoco foi modificado enquanto sua Promise estava descobrindo se iria ser resolvida ou rejeitada.
  assincrono: true,
 }; */
 ```
-Observe que a função `minhaMaeContinuouFazendoOAlmocoETerminou()` estão declaradas após a chamada de `const favorParaMae`, ainda assim 
-foram executadas dentro da promise.
+Observe que a função `minhaMaeContinuouFazendoOAlmocoETerminou()` está declarada após a chamada de `const favorParaMae`, ainda assim 
+foram executadas dentro da Promise.
 
-Quando seu script chega em um código assíncrono, igual uma promise, ele coloca ela em uma thread diferente e continua lendo o resto do código síncrono. Ao final do código síncrono ele coloca o resultado das promises de volta a thread síncrona.
+Quando seu script chega em um código assíncrono, igual uma Promise, ele a coloca em uma thread diferente e continua lendo o resto do código síncrono. Ao final do código síncrono ele coloca o resultado das Promises de volta a thread síncrona.
 
 ## Entendendo como usar o .then() um abaixo do outro.
 ### Vamos ao exemplo de uma Promise resolvida com um .then().
@@ -163,9 +163,9 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
         Promise.resolve('Promessa resolvida')
           .then((dados) => console.log(dados));  // Irá imprimir 'Promessa resolvida' no console do navegador.
 ```
- O `.then((dados) => {...})` recebe uma função de callback, tenha em mente que o parâmetro(dados) passado para essa callback vem do retorno de `resolve('Promessa resolvida')`
+ O `.then((dados) => {...})` recebe uma função de callback. Tenha em mente que o parâmetro (dados) passado para essa callback vem do retorno de `resolve('Promessa resolvida')`
         
- Caso você tente encadear outro .then você não terá o `dados`, mas por que? Porquê no .then do exemplo acima você não retorna nada, apenas faz uma ação (console.log).
+ Caso você tente encadear outro .then() você não terá o `dados`, mas por quê? Porque no .then() do exemplo acima você não retorna nada, apenas faz uma ação (console.log).
  Se você quer encadear outro `.then()` neste, você precisa retornar o `dados`, podendo modificá-lo ou não antes de retorná-lo.
 ```javascript
         Promise.resolve('Promessa resolvida')
@@ -178,58 +178,58 @@ Quando seu script chega em um código assíncrono, igual uma promise, ele coloca
 
 
  Observe o exemplo que será explicado abaixo com detalhes. Não se preocupe com o .catch() e .finally() por enquanto.
- Para compreender se atente aos comentários.
+ Para compreender, se atente aos comentários.
 ```javascript
         const promessaResolvida = Promise.resolve('Fiz os exercícios diários')
-          .then((dados) => { // O parametro dados passado na callback do .then contém o que foi retornado no resolve().
+          .then((dados) => { // O parametro "dados" passado na callback do .then() contém o que foi retornado no resolve().
             const dadosModificados = `${dados} e estou com disposição`;
             console.log(dadosModificados);
             return dadosModificados;
           })
-          .then((dados) => { // O dados agora tem o valor retornado do then acima, dadosModificado
+          .then((dados) => { // O "dados" agora tem o valor retornado do .then() acima, dadosModificado
             const dadosModificados2 = `${dados} , minha saúde está melhorando.`;
             console.log(dadosModificados2);
             return dadosModificados2;
           })
           .catch((erro) => {
-            // Aqui seria o código para tratamento de algum erro que aconteça nos dois then() anteriores.
+            // Aqui seria o código para tratamento de algum erro que aconteça nos dois .then() anteriores.
             console.error(erro, 'e estou me sentido sem disposição. Algo deu errado.');
           })
-          .then((dados) => { // O dados agora tem o valor retornado do then acima, dadosModificado2. Caso aconteça algum erro no dois then acima, dados terá o valor retornado pelo catch, neste caso é undefined, por quê não retornamos nada.
-            const dadosModificados3 = `${dados} Depois do catch() posso continuar usando o then().`;
+          .then((dados) => { // O "dados" agora tem o valor retornado do .then() acima, dadosModificado2. Caso aconteça algum erro no dois .then() acima, "dados" terá o valor retornado pelo .catch(), neste caso é "undefined", porque você não retornou nada.
+            const dadosModificados3 = `${dados} Depois do .catch() posso continuar usando o .then()!`;
             console.log(dadosModificados3);
             return dadosModificados3;
           })
           .finally(() => { console.log('Resolve - Isso acontece de qualquer forma, dando erro ou não'); });
 ```
- A constante promessaResolvida contém uma Promise que já está no estado fulfilled(resolvida), portanto, posso usar o .then() para fazer algo com os dados retornados pelo resolve().
+ A constante promessaResolvida contém uma Promise que já está no estado fulfilled (resolvida), portanto posso usar o .then() para fazer algo com os dados retornados pelo resolve().
  
- Note que temos 2 then(), 1 catch(), 1 then() e 1 finally(). Os três .then() serão executados e mostrados no console do seu navegador porquê não houve nenhum erro na execução deles.
+ Note que temos 2 .then(), 1 .catch(), 1 .then() e 1 .finally(). Os três .then() serão executados e mostrados no console do seu navegador porque não houve nenhum erro na execução deles.
  
- Caso houvesse um erro em algum dos dois primeiros .then(), o terceiro .then() seria uma continuação do .catch(). Ex: Aconteceu algum erro nos dois primeiros, você conhece os erros possíveis, você trata eles (faz alguma ação de acordo com o erro), e pode continuar sua promise retornando algum valor.
+ Caso houvesse um erro em algum dos dois primeiros .then(), o terceiro .then() seria uma continuação do .catch(). Ex: Aconteceu algum erro nos dois primeiros, você conhece os erros possíveis, você trata eles (faz alguma ação de acordo com o erro) e pode continuar sua Promise retornando algum valor.
         
- Repare que todos .then() retornam algum valor, assim posso encadeá-los, fazendo em cada um alguma lógica necessária e repassando o novo valor pelo return.
+ Repare que todos os .then() retornam algum valor, assim posso encadeá-los, fazendo em cada um alguma lógica necessária e repassando o novo valor pelo return.
  
 --- 
 ## Fetch API
-Você aprenderá utilizar o fecth() e o método .json(), da Fetch API dos navegadores, leia com calma o código abaixo, será explicado depois. Para compreender se atente aos comentários.
-Por ser um assunto muito extenso, terá vários links nos Recursos Adicionais, foque apenas no fetch() e .json() por enquanto, será usado nos próximos projetos.
+Você vai aprender a utilizar o fecth() e o método .json() da Fetch API dos navegadores. Leia com calma o código abaixo, ele será explicado depois. Para compreender, se atente aos comentários.
+Por ser um assunto muito extenso, terá vários links nos Recursos Adicionais. Foque apenas no fetch() e .json() por enquanto, eles serão usados nos próximos projetos.
 
 ```javascript
 const url = 'https://viacep.com.br/ws/01001000/json/';
 const urlComErro = 'https://viacep.com.br/ws/01001000erro/json/';
 
 const viaCep = () => {
-  return fetch(url) // fetch() devolve uma promise.
-    .then((response) => response.json()) // .json() devolve um promise, por isso podemos encadear outro .then() e fazer alguma operação com os dados.
+  return fetch(url) // fetch() devolve uma Promise.
+    .then((response) => response.json()) // .json() devolve um Promise, por isso podemos encadear outro .then() e fazer alguma operação com os dados.
 
-    .then((data) => { // O parâmetro data tem valor retornado do primeiro .then() com o JSON extraído da reposta(response) do fetch.
+    .then((data) => { // O parâmetro "data" tem valor retornado do primeiro .then() com o JSON extraído da reposta (response) do fetch().
       adicionarEndereco(data);
-      // return data; // Experimente descomentar o return data do começo da linha, e veja que no then abaixo o valor é retornado corretamente no console do navegador.
+      // return data; // Experimente descomentar o "return data" do começo da linha e veja que no .then() abaixo o valor é retornado corretamente no console do navegador.
 
-    }) // Neste then, você não retornou nada, então no próximo, você não terá acesso a nenhuma informação.
+    }) // Neste .then() você não retornou nada, então no próximo você não terá acesso a nenhuma informação.
     
-    .then((data) => console.log('Verificando o valor de data:', data))  // data é undefined porquê não houve retorno no .then() acima.
+    .then((data) => console.log('Verificando o valor de data:', data))  // "data" é undefined porque não houve retorno no .then() acima.
     
     .catch((error) => console.error('Aconteceu um erro:', error)); // Experimente trocar para o urlComErro no fetch().
 }
@@ -246,13 +246,13 @@ const adicionarEndereco = ({ logradouro, bairro, localidade, uf }) => {
 
 O fetch('https://viacep.com.br/ws/01001000/json/') vai até o endereço passado como parâmetro que neste caso devolve um arquivo no formato JSON.
 
-Coloque https://viacep.com.br/ws/01001000/json/ no seu navegador e veja o formato de um arquivo JSON.
+Coloque "https://viacep.com.br/ws/01001000/json/" no seu navegador e veja o formato de um arquivo JSON.
 
-No primeiro `.then()` pegamos a resposta dessa requisição e usamos o `.json()` para extrair o JSON da resposta(response) e converter para um objeto, assim podemos manipulá-lo pelo javascript.
+No primeiro .then() pegamos a resposta dessa requisição e usamos o .json() para extrair o JSON da resposta (response) e converter para um objeto, assim podemos manipulá-lo pelo javascript.
 
 No segundo .then() usamos o objeto javascript e adicionamos o endereço no index.html usando a função `adicionarEndereco` que já faz a desestruturação de `data` pegando apenas `{ logradouro, bairro, localidade, uf }`.
 
-No terceiro .then() estamos apenas imprimindo no console do navegador 'Verificando o valor de data: undefined para reforçar que caso você não retorne nada no .then() anterior o parâmetro da callback do próximo .then() será undefined.
+No terceiro .then() estamos apenas imprimindo no console do navegador "Verificando o valor de data: undefined" para reforçar que caso você não retorne nada no .then() anterior o parâmetro da callback do próximo .then() será undefined.
 
 No .catch(), caso aconteça algum erro no fetch() ou em algum dos três .then() acima, estaríamos imprimindo o erro no console do navegador.
 
@@ -305,9 +305,9 @@ const adicionarEndereco = ({ logradouro, bairro, localidade, uf }) => {
   main.appendChild(cep);
 };
 ```
-Agora faça o teste com a url de erro e observer o console do navegador.
+Agora faça o teste com a url de erro e observe o console do navegador.
 
-Você agora aprenderá como pegar uma promise e usá-la em outro lugar de seu código, usando o .then() e .catch() posteriormente.
+Você agora aprenderá como pegar uma Promise e usá-la em outro lugar de seu código usando o .then() e .catch() posteriormente.
 
 Você verá a explicação nos comentários do arquivo script.js
 
@@ -369,7 +369,7 @@ index.html
 
 script.js ( Para compreender se atente aos comentários. )
 ```javascript
-const viaCep = (cep) => { // Você pode retornar um promise e continuar usando o .then() em outro local do seu script. Observe na função adicionarEndereco()
+const viaCep = (cep) => { // Você pode retornar um Promise e continuar usando o .then() em outro local do seu script. Observe na função adicionarEndereco()
   return fetch(`https://viacep.com.br/ws/${cep}/json/`)
   .then((response) => response.json());
 };
@@ -387,7 +387,7 @@ const setarInputsValues = ({ logradouro, bairro, localidade, uf }) => { // A fun
 const adicionarEndereco = () => {
   document.querySelector('#error').textContent = '';
   const cep = pegarInputValue('#input-viacep');
-  viaCep(cep) // Veja que aqui você chama a função viaCep e continuar usando o .then(), o .catch() e finally().
+  viaCep(cep) // Veja que aqui você chama a função viaCep e continuar usando o .then(), o .catch() e .finally().
     .then(setarInputsValues)
     .catch((erro) => {
       console.error('Ocorreu um erro:', erro);
@@ -399,30 +399,30 @@ window.onload = () => {
   document.querySelector('#btn-viacep').addEventListener('click', adicionarEndereco);
 };
 ```
-Digite um cep errado e observe que o .catch() chamado na função adicionarEndereco() é executado.
+Digite um cep errado (Ex: 010010001) e observe que o .catch() chamado na função adicionarEndereco() é executado.
 
 
 ---
 ## async/await com try/catch/finally
  
- O async/await veio para facilitar o trabalho com promises, tornando menos verboso e de fácil leitura.
+ O async/await veio para facilitar o trabalho com Promises, tornando menos verboso e de fácil leitura.
  
- Se você coloca o `await` antes de um código assíncrono, ele para a execução do script síncrono até que seu código assíncrono seja executado, mas para usar o `await` você precisa de uma função assíncrona, você faz isso colocando antes dela um `async`.
+ Se você coloca o `await` antes de um código assíncrono, ele para a execução do script síncrono até que seu código assíncrono seja executado. Para usar o `await` você precisa de uma função assíncrona, você faz isso colocando antes dela um `async`.
  
  Ex: `async function xablau() { ... }` ou `const xablau = async () => { ... }`
  
 
 ### Uma breve introdução a async/await usando try/catch/finally
 
-Você observará que é o mesmo conceito da promise, apenas com uma sintaxe diferente. Para compreender se atente aos comentários.
+Você observará que é o mesmo conceito da Promise, apenas com uma sintaxe diferente. Para compreender melhor, se atente aos comentários.
 
 ```javascript
 const funcaoAssincrona = async () => { // Você colocará o async antes da função para transformá-la em uma função assíncrona.
 
-  try { // Dentro do try é aonde você chamará seu código assíncrono com o await.
+  try { // Dentro do try é onde você chamará seu código assíncrono com o await.
 
-    const forms = await fetch('urlForms'); // O await faz com que o código pare nessa linha até que fetch retorne uma resposta.
-    const xablau = await forms.json(); // Essa linha só será executada após a linha acima estiver com a resposta do fetch().
+    const forms = await fetch('urlForms'); // O await faz com que o código pare nessa linha até que fetch() retorne uma resposta.
+    const xablau = await forms.json(); // Essa linha só será executada após a linha acima estar com a resposta do fetch().
 
     if (xablau.todosResponderamForms === true) {
       console.log('Uhullll #goTrybe');
@@ -436,7 +436,7 @@ const funcaoAssincrona = async () => { // Você colocará o async antes da funç
 
   } finally { // O que estiver aqui dentro será executado de qualquer forma.
   
-    console.log('Hoje você responderá o forms. Combinado!?')
+    console.log('Hoje você responderá o forms. Combinado?!')
     
   }
 
@@ -448,7 +448,7 @@ const funcaoAssincrona = async () => { // Você colocará o async antes da funç
  ```javascript
  const viaCep = async (cep) => {
   const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-  return await response.json();
+  return response.json(); // Não é necessário colocar o await nesta linha porque o return já espera a resposta da Promise.
 };
 
 const pegarInputValue = (query) => document.querySelector(query).value;
@@ -479,34 +479,45 @@ window.onload = () => {
 };
  ```
 ### Agora faça um exercícios de fixação.
-  Você tem o código viaCep no formato de Promise e async/await, para reforçar o aprendizado, refatore o de promise para async/await e o de awync/await para promise. (Caso você fique com dúvida, releia os exemplos.)
+  Você tem o código viaCep no formato de Promise e async/await, para reforçar o aprendizado refatore o código de Promise para async/await e o de async/await para Promise. (Caso você fique com dúvida, releia os exemplos.)
  
 ---
 # Vamos fazer juntos!
-  Você leu os textos e os recursos adicionais!? Então vamos para a aula ao vivo! Ela será dividida em dois momentos: primeiro, vamos discutir os exemplos comentados e tirar dúvidas. Depois, teremos uma explicação geral sobre promises e `throw new Error()` onde faremos um exemplo de uso de Promises em comunicação com uma API, também será explicado sobre a thread síncrona e assíncrona, tirando dúvidas ao final.
-Vamos para o Slack, onde o link estará disponível.
+  Você leu os textos e os recursos adicionais?! Então vamos para a aula ao vivo! Ela será dividida em dois momentos: primeiro, vamos discutir os exemplos comentados e tirar dúvidas. Depois, teremos uma explicação geral sobre Promises e `throw new Error()` onde faremos um exemplo de uso de Promises em comunicação com uma API e também será explicado sobre a thread síncrona e assíncrona, tirando dúvidas ao final.
+Vamos para o Slack onde o link estará disponível.
   
 ---
 # Exercícios
 ## Agora, a prática!
   Você irá criar uma Pokébola Digital.
-  Ela irá buscar tanto pelo nome, quanto pelo id do pokémon.
-  Você irá implementar as funções `fetchPokeApi` e `addPokemon`. É muito importante que faça primeiro no formato de promise e só depois refatorar para async/await para praticar o conhecimento adquirido.
+  Ela irá buscar tanto pelo nome, quanto pelo id do Pokémon.
+  Você irá implementar as funções `fetchPokeApi` e `addPokemon`. É muito importante que faça primeiro no formato de Promise e só depois refatore para async/await para praticar o conhecimento adquirido.
 
-  1. Na função fetchPokeApi, utilize o fetch() para buscar no endereço da API https://pokeapi.co/api/v2/pokemon/pikachu.
+  1. Na função fetchPokeApi, utilize o fetch() para buscar no endereço da API "https://pokeapi.co/api/v2/pokemon/pikachu".
   2. Faça um .then() e extraia o json da resposta do fetch().
   3. Coloque um parâmetro na função fetchPokeApi.
-  4. Troque o parâmetro do fetch() para string literals, coloque o parâmetro que acabou de criar na fetchPokeApi no lugar de pikachu.
+  4. Troque o parâmetro do fetch() para string literals e coloque o parâmetro que acabou de criar na fetchPokeApi no lugar de Pikachu.
   5. No addPokemon, chame a função fetchPokeApi passando a constante pokemon como argumento.
   6. Encadeie um .then() e use a função setPokemonInfos.
-  7. Encadeie um .catch() e caso aconteça um erro, faça ele imprimir um console.error() passando o erro como argumento.
-  8. Ainda no .catch() coloque no span com id="error" a msg "Digite o nome de um Pokémon ou um número válido e tente novamente."
+  7. Encadeie um .catch() e, caso aconteça um erro, faça ele imprimir um console.error() passando o erro como argumento.
+  8. Ainda no .catch(), coloque na tag span com id="error" a mensangem "Digite o nome de um Pokémon ou um número válido e tente novamente."
   9. Faça uma cópia do seu arquivo .js e refatore para usar async/await.
   
 
 ## Bônus
-  1. E
+  Você irá implementar todas as funções necessárias no arquivo script.js.
+  
+  1. Crie uma função assíncrona que faz a requisição a uma url passada por parâmetro.
+  2. Na função criada anteriormente, retorne a resposta usando a função .json().
+  3. Crie uma função que adiciona o endereço de uma imagem no src da tag com id="animal-image".
+  4. Crie uma função para buscar a imagem de um gato na api "https://aws.random.cat/meow".
+  5. Crie uma função para buscar a imagem de uma raposa na api "https://randomfox.ca/floof/".
+  6. Crie uma função para buscar a imagem de um cachorro na api "https://random.dog/woof.json".
+  7.  Na função que busca a imagem do cachorro, faça uma verificação se é um arquivo .jpg, caso não seja, retorna um erro com a mensagem "O arquivo não é .jpg"
+  8.  Adiciona o EventListener em cada botão correspondente ao nome do animal para que exiba a sua respectiva foto.
 
 ---
 # Recursos adicionais
-
+https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch
+https://www.digitalocean.com/community/tutorials/how-to-use-the-javascript-fetch-api-to-get-data-pt
+https://www.braziljs.org/p/fetch-api-e-o-javascript
