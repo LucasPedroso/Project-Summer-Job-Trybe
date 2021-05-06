@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <title>Exercício de Promise usando PokeAPI</title>
+  </head>
+  <body>
+    <header>
+      <h1>Pokémon</h1>
+    </header>
+    <main>
+      <div class="container-search">
+        <input
+          id="pokemon-search"
+          type="text"
+          placeholder="Nome do Pokémon ou número de 1 a 898"
+        />
+        <button id="btn-pokemon-search">Pokébola, vai!</button>
+      </div>
+      
+      <div class="container-line">
+        <span id="error" class="error"></span>
+      </div>
+
+      <div class="container">
+        <div class="container-line">
+          <img id="pokemon-image" class="container-img" />
+        </div>
+        <div class="container-line">
+          <p id="pokemon-name" class="container-p">
+            <span class="container-span">Nome:</span>
+            <span class="container-span-data"></span>
+          </p>
+        </div>
+        <div class="container-line">
+          <p id="pokemon-weight" class="container-p">
+            <span class="container-span">Peso:</span>
+            <span class="container-span-data"></span>
+          </p>
+        </div>
+        <div class="container-line">
+          <p id="pokemon-height" class="container-p">
+            <span class="container-span">Altura:</span>
+            <span class="container-span-data"></span>
+          </p>
+        </div>
+        <div class="container-line">
+          <p id="pokemon-moves" class="container-p">
+            <span class="container-span">Qtd de Movimentos:</span>
+            <span class="container-span-data"></span>
+          </p>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>Desenvolvido por pessoa estudante Trybe.</p>
+    </footer>
+  </body>
+</html>
