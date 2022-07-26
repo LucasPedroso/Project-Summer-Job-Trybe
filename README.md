@@ -1,5 +1,3 @@
-@Author: Lucas Eduardo Pedroso
-# Aula criada para ensinar novos alunos a entender Promises
 # SummerJob
 
 # JavaScript Promises
